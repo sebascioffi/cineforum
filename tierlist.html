@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="imagenes/icono.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>    
+    <script src="node_modules/react/umd/react.development.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Wo/9b7BV+TDx2Eu8Gxy/zF67onNq7vF68W5X8B6z5QOWYf7MzkrW6UqxO6UeI6+kuGvLTTylkP9FsCspJFzkbA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet" type="text/css">
+    <script src="script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Cineforum</title>
+</head>
+<body>
+  <header>
+      <nav class="navbar navbar-expand-lg" id="nav">
+        <div class="container-md">
+          <a class="navbar-brand" href="index.html"><img src="imagenes/logo.jpg" alt="Logo" width="110" height="110"></a>
+          <div class="ml-auto">
+            <a class="enlace_tierlist" href="index.html">Página Inicio</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="divinput_tier">
+        <input type="text" id="director-input" placeholder="Selecciona un director de la lista...">
+      </div>
+  
+      <script>
+$(function() {
+  $('#director-input').autocomplete({
+  source: function(request, response) {
+    $.ajax({
+      url: 'https://api.themoviedb.org/3/search/person',
+      dataType: 'json',
+      data: {
+        api_key: 'b8eab5c8f5604ac06e5dc051de99718e',
+        query: request.term
+      },
+      success: function(data) {
+        var directors = $.map(data.results, function(result) {
+          return {
+            label: result.name,
+            value: result.name, // Cambiamos el valor por el nombre del director
+            id: result.id // Guardamos el id para usarlo en la siguiente petición AJAX
+          };
+        });
+        response(directors);
+      }
+    });
+  },
+  minLength: 2,
+  select: function(event, ui) {
+    $('#director-input').val(ui.item.label); // Actualizamos el valor del input con el nombre del director seleccionado
+    var directorId = ui.item.id;
+    $.ajax({
+      url: 'https://api.themoviedb.org/3/person/' + directorId + '/movie_credits',
+      dataType: 'json',
+      data: {
+        api_key: 'b8eab5c8f5604ac06e5dc051de99718e',
+      },
+      success: function(data) {
+        $('#portadas').empty();
+        $(function() {
+  // Agrega el código para que las imágenes de las películas sean arrastrables:
+  $('.draggable').draggable({
+    revert: true, // La imagen volverá a su posición original si no es soltada en una categoría
+    zIndex: 100,
+    start: function(event, ui) {
+      ui.helper.addClass('dragging'); // Agrega la clase "dragging" para indicar que la imagen está siendo arrastrada
+    },
+    stop: function(event, ui) {
+      ui.helper.removeClass('dragging'); // Remueve la clase "dragging" cuando la imagen deja de ser arrastrada
+    }
+  });
+  
+  // Agrega el código para que las divs de cada categoría de la tierlist sean droppables:
+  $('.droppable').droppable({
+    accept: '.draggable', // Sólo acepta elementos con la clase "draggable"
+    hoverClass: 'hovered',
+    drop: function(event, ui) {
+            // Obtener la altura de la tier en la que se ha soltado la película
+            var tierHeight = $(this).height();
+      
+      // Establecer la altura de la imagen de la película
+      $(ui.draggable).height(tierHeight);
+      $(ui.draggable).width("85px");
+      var $this = $(this);
+      var $movie = ui.draggable;
+      $movie.detach().appendTo($this); // Mueve la imagen de la película a la categoría correspondiente
+    }
+  });
+});
+        $.each(data.crew, function(index, movie) {
+          if (movie.department === 'Directing' && movie.poster_path) {
+            var img = $('<img />').attr({
+              'src': 'https://image.tmdb.org/t/p/w185' + movie.poster_path,
+              'alt': movie.title,
+              'class': 'draggable' // Agrega la clase "draggable"
+            });
+            $('#portadas').append(img);
+          }
+        });
+      }
+    });
+  }
+});
+});
+$(function() {
+  // Agrega el código para que las películas arrastradas puedan soltarse debajo de la tierlist:
+  $('#portadas').droppable({
+    accept: '.draggable', // Solo acepta elementos con la clase "draggable"
+    hoverClass: 'hovered',
+    drop: function(event, ui) {      
+      // Establecer la altura de la imagen de la película
+      $(ui.draggable).height("90px");
+      
+      // Mueve la imagen de la película debajo de la tierlist
+      $(ui.draggable).detach().appendTo('#portadas');
+    }
+  });
+});   
+      </script>
+      <div class="tierlist">
+        <div class="tier" id="tierperfecta">
+          <div class="title" id="perfecta">Perfecta</div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+        </div>
+        <div class="tier" id="tierbuena">
+          <div class="title" id="buena">Buena</div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+        </div>
+        <div class="tier" id="tierregular">
+          <div class="title" id="regular">Regular</div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+        </div>
+        <div class="tier" id="tiermala">
+          <div class="title" id="mala">Mala</div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+        </div>
+        <div class="tier" id="tierpesima">
+          <div class="title" id="pesima">Pésima</div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+          <div class="item droppable"></div>
+        </div>
+      </div>
+
+      <div id="portadas"></div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

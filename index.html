@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="imagenes/icono.png">
+    <script src="node_modules/react/umd/react.development.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Wo/9b7BV+TDx2Eu8Gxy/zF67onNq7vF68W5X8B6z5QOWYf7MzkrW6UqxO6UeI6+kuGvLTTylkP9FsCspJFzkbA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet" type="text/css">
+    <script src="script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Cineforum</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg" id="nav">
+          <div class="container-md">
+            <a class="navbar-brand" href="index.html"><img src="imagenes/logo.jpg" alt="Logo" width="110" height="110"></a>
+            <div class="ml-auto">
+              <a class="enlace_tierlist" href="tierlist.html">Armá tu propia Tierlist!</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+    <main>
+
+      <div class="contenedor-busq">
+      <div class="contenedor-busqavan">
+        <div>
+        <h2>Busqueda avanzada:</h2>
+        </div>
+        <div id="avanzada">
+      <!-- Menú desplegable de géneros -->
+
+<label for="genero" id="lblgenero" class="labels">Género:</label>
+<select id="genero" class="selects">
+  <option value="">Todos</option>
+</select>
+
+<!-- Menú desplegable de años de estreno -->
+<label for="anio" class="labels">Año de estreno:</label>
+<select id="anio" class="selects">
+  <option value="" class="options">Todos</option>
+</select>
+
+<!-- Menú desplegable de calificación mínima -->
+<label for="calificacion" class="labels">Calificación:</label>
+<select id="calificacion" class="selects">
+  <option value="">Todas</option>
+  <option value=1.000>1</option>
+  <option value=2.000>2</option>
+  <option value=3.000>3</option>
+  <option value=4.000>4</option>
+  <option value=5.000>5</option>
+  <option value=6.000>6</option>
+  <option value=7.000>7</option>
+  <option value=8.000>8</option>
+  <option value=9.000>9</option>
+  <option value=10.000>10</option>
+</select>
+<label for="directors" id="lbldirectors" class="labels">Director:</label>
+<select id="directors" name="directors" class="selects">
+  <option value="Todos">Todos</option>
+  <option value="" data-director="Quentin Tarantino">Quentin Tarantino</option>
+  <option value="" data-director="Christopher Nolan">Christopher Nolan</option>
+  <option value="" data-director="Steven Spielberg">Steven Spielberg</option>
+  <option value="" data-director="David Fincher">David Fincher</option>
+  <option value="" data-director="Martin Scorsese">Martin Scorsese</option>
+  <option value="" data-director="Ridley Scott">Ridley Scott</option>
+  <option value="" data-director="Alfred Hitchcock">Alfred Hitchcock</option>
+  <option value="" data-director="Stanley Kubrick">Stanley Kubrick</option>
+  <option value="" data-director="Spike Lee">Spike Lee</option>
+  <option value="" data-director="Clint Eastwood">Clint Eastwood</option>
+  <option value="" data-director="Greta Gerwig">Greta Gerwig</option>
+  <option value="" data-director="Jordan Peele">Jordan Peele</option>
+  <option value="" data-director="Bong Joon-ho">Bong Joon-ho</option>
+  <option value="" data-director="Denis Villeneuve">Denis Villeneuve</option>
+  <option value="" data-director="Guillermo del Toro">Guillermo del Toro</option>
+  <option value="" data-director="Wes Anderson">Wes Anderson</option>
+  <option value="" data-director="Taika Waititi">Taika Waititi</option>
+  <option value="" data-director="Ava DuVernay">Ava DuVernay</option>
+  <option value="" data-director="Sofia Coppola">Sofia Coppola</option>
+  <option value="" data-director="Yorgos Lanthimos">Yorgos Lanthimos</option>
+  <option value="" data-director="Joel Coen">Joel Coen</option>
+  <option value="" data-director="Ethan Coen">Ethan Coen</option>
+  <option value="" data-director="Hayao Miyazaki">Hayao Miyazaki</option>
+  <option value="" data-director="Darren Aronofsky">Darren Aronofsky</option>
+  <option value="" data-director="James Cameron">James Cameron</option>
+  <option value="" data-director="Francis Ford Coppola">Francis Ford Coppola</option>
+  <option value="" data-director="Oliver Stone">Oliver Stone</option>
+  <option value="" data-director="Pedro Almodóvar">Pedro Almodóvar</option>
+  <option value="" data-director="Paul Thomas Anderson">Paul Thomas Anderson</option>
+  <option value="" data-director="Danny Boyle">Danny Boyle</option>
+  <option value="" data-director="Jean-Pierre Jeunet">Jean-Pierre Jeunet</option>
+  <option value="" data-director="Terrence Malick">Terrence Malick</option>
+  <option value="" data-director="Gaspar Noé">Gaspar Noé</option>
+  <option value="" data-director="Lynne Ramsay">Lynne Ramsay</option>
+  <option value="" data-director="Dario Argento">Dario Argento</option>
+  <option value="" data-director="Terry Gilliam">Terry Gilliam</option>
+  <option value="" data-director="David Lynch">David Lynch</option>
+  <option value="" data-director="Peter Jackson">Peter Jackson</option>
+  <option value="" data-director="Spike Jonze">Spike Jonze</option>
+  <option value="" data-director="Sergio Leone">Sergio Leone</option>
+</select>
+</div>
+      </div>
+      <div class="contenedor-input">
+        <div>
+        <h2>Busqueda por título:</h2>
+        </div>
+        <form id="divinput">
+          <input id="input1" type="text" placeholder="Busca tu película favorita...">
+        </form>
+        </div>
+</div>
+        <div id="peliculas"></div>
+        <div class="divcargarmas">
+            <button id="cargar-mas">Ver más</button>
+        </div>
+        
+    </main>
+
+    <footer id="pie">
+        <p>© Los datos de la película son proporcionados por The Movie Database (TMDB)</p>
+        <p id="sep">https://www.themoviedb.org/</p>
+        <p>Sitio Web desarrollado por Sebastián Cioffi</p>
+        <p>Argentina, Buenos Aires</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

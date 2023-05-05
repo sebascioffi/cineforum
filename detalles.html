@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="node_modules/react/umd/react.development.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Wo/9b7BV+TDx2Eu8Gxy/zF67onNq7vF68W5X8B6z5QOWYf7MzkrW6UqxO6UeI6+kuGvLTTylkP9FsCspJFzkbA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet" type="text/css">
+    <script src="script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Cineforum</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg" id="nav">
+          <div class="container-md">
+            <a class="navbar-brand" href="index.html"><img src="imagenes/logo.jpg" alt="Logo" width="110" height="110"></a>
+            <div class="ml-auto">
+              <a class="enlace_tierlist" href="tierlist.html">Armá tu propia Tierlist!</a>
+            </div>
+          </div>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <a href="index.html" class="btn">Volver a inicio</a>
+        </div>
+        <div id="pelicula"></div>
+        <div id="trailer"></div>
+
+          <script>
+        var apiKey = "b8eab5c8f5604ac06e5dc051de99718e";
+        var urlParams = new URLSearchParams(window.location.search);
+        var peliculaId = urlParams.get("id");
+        var creditsUrl = "https://api.themoviedb.org/3/movie/" + peliculaId + "/credits?api_key=" + apiKey;
+
+
+        fetch("https://api.themoviedb.org/3/movie/" + peliculaId + "?api_key=" + apiKey)
+        .then(function(response) {
+        return response.json();
+        })
+        .then(function(pelicula) {
+        var contenedorPelicula = document.getElementById("pelicula");
+
+        var divportada = document.createElement("div");
+        var divinfo = document.createElement("div");
+
+        var imagenPelicula = document.createElement("img");
+        imagenPelicula.src = "https://image.tmdb.org/t/p/w500" + pelicula.poster_path;
+        imagenPelicula.alt = pelicula.title;
+
+        var tituloPelicula = document.createElement("h2");
+        tituloPelicula.textContent = pelicula.title;
+
+        var sinopsisPelicula = document.createElement("p");
+        sinopsisPelicula.textContent = pelicula.overview;
+
+        var directorPelicula = document.createElement("p");
+        fetch(creditsUrl)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(creditos) {
+    var director = creditos.crew.find(function(crewMember) {
+      return crewMember.job === "Director";
+    });
+    if (director) {
+      directorPelicula.innerHTML = "<strong>Director:</strong> " + director.name;
+    } else {
+      directorPelicula.innerHTML = "<strong>Director:</strong> Desconocido";
+    }
+    divinfo.appendChild(directorPelicula);
+  });
+       
+        var fechaEstreno = document.createElement("p");
+        fechaEstreno.innerHTML = "<strong>Fecha de estreno:</strong> " + pelicula.release_date;
+
+        var generos = document.createElement("p");
+        generos.innerHTML = "<strong>Géneros:</strong> " + pelicula.genres.map(g => g.name).join(", ");
+
+        var duracion = document.createElement("p");
+        duracion.innerHTML = "<strong>Duración:</strong> " + pelicula.runtime + " minutos";
+
+        var pais = document.createElement("p");
+        pais.innerHTML = "<strong>País de origen:</strong> " + pelicula.production_countries.map(c => c.name).join(", ");
+
+        var calificacionAudiencia = document.createElement("p");
+        calificacionAudiencia.innerHTML = "<strong>Calificación de audiencia:</strong> " + pelicula.vote_average;
+
+        fetch("https://api.themoviedb.org/3/movie/" + peliculaId + "/credits?api_key=" + apiKey)
+        .then(function(response) {
+        return response.json();
+        })
+        .then(function(creditos) {
+        var actores = creditos.cast.slice(0, 5);
+        var actoresTexto = actores.map(a => a.name + " (" + a.character + ")").join(", ");
+
+        var elenco = document.createElement("p");
+        elenco.innerHTML = "<strong>Elenco:</strong> " + actoresTexto;
+
+        divinfo.appendChild(elenco);
+        });
+
+        var productoras = document.createElement("p");
+        productoras.innerHTML = "<strong>Compañías productoras:</strong> " + pelicula.production_companies.map(c => c.name).join(", ");
+
+        var presupuesto = document.createElement("p");
+        presupuesto.innerHTML = "<strong>Presupuesto:</strong> " + (pelicula.budget ? pelicula.budget.toLocaleString() + " dólares" : "Desconocido");
+
+        var ingresosTaquilla = document.createElement("p");
+        ingresosTaquilla.innerHTML = "<strong>Ingresos de taquilla:</strong> " + (pelicula.revenue ? pelicula.revenue.toLocaleString() + " dólares" : "Desconocido");
+
+
+        fetch("https://api.themoviedb.org/3/movie/" + peliculaId + "/videos?api_key=" + apiKey)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(videos) {
+        if (videos.results.length > 0) {
+            var videoKey = videos.results[0].key;
+            var trailer = document.createElement("iframe");
+            trailer.src = "https://www.youtube.com/embed/" + videoKey;
+            trailer.width = 560;
+            trailer.height = 315;
+            trailer.allowFullscreen = true;
+            trailer.title = pelicula.title + " Trailer";
+            var contenedorTrailer = document.getElementById("trailer");
+            contenedorTrailer.appendChild(trailer);
+        }
+    });
+
+
+        divportada.appendChild(imagenPelicula);
+        divinfo.appendChild(tituloPelicula);
+        divinfo.appendChild(sinopsisPelicula);
+        divinfo.appendChild(fechaEstreno);
+        divinfo.appendChild(generos);
+        divinfo.appendChild(duracion);
+        divinfo.appendChild(pais);        
+        divinfo.appendChild(calificacionAudiencia);
+        divinfo.appendChild(productoras);
+        divinfo.appendChild(presupuesto);
+        divinfo.appendChild(ingresosTaquilla);
+        contenedorPelicula.appendChild(divportada);
+        contenedorPelicula.appendChild(divinfo);
+        
+      });
+    </script>
+    
+    
+    </main>
+
+    <footer id="pie">
+        <p>© Los datos de la película son proporcionados por The Movie Database (TMDB)</p>
+        <p id="sep">https://www.themoviedb.org/</p>
+        <p>Sitio Web desarrollado por Sebastián Cioffi</p>
+        <p>Argentina, Buenos Aires</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
