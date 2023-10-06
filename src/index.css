@@ -683,7 +683,11 @@ div.ui-helper-hidden-accessible{
     }
 
     .contenedor-input{
-      padding-top: 100px;
+      padding-top: 150px;
+    }
+
+    .contenedor-busqavan{
+      padding-top: 150px;
     }
 
   
