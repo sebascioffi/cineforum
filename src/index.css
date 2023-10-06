@@ -676,7 +676,7 @@ div.ui-helper-hidden-accessible{
   padding-top: 20px;
 }
 
-@media screen and (max-width:810px){
+@media screen and (max-width:510px){
   
     .contenedor-input{
       background-color: red;
