@@ -680,9 +680,11 @@ div.ui-helper-hidden-accessible{
   
     .contenedor-busq{
       flex-direction: column;
-      margin-top: 500px;
     }
 
+    .contenedor-input{
+      padding-top: 100px;
+    }
 
   
   }
