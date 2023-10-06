@@ -677,9 +677,9 @@ div.ui-helper-hidden-accessible{
 }
 
 @media screen and (max-width:400px){
-  #input1{
-    font-size: 5px;
-  }
-    
+  
+    .contenedor-input{
+      background-color: red;
+    }
   
   }
