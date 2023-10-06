@@ -678,8 +678,10 @@ div.ui-helper-hidden-accessible{
 
 @media screen and (max-width:410px){
   
-    .contenedor-input{
-      background-color: red;
+    .contenedor-busq{
+      flex-direction: column;
     }
+
+
   
   }
