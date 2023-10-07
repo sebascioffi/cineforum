@@ -14,7 +14,7 @@ const Header  = ({ isAuthenticated, handleLogout }) => {
               <Link to={`/`} className='enlace_tierlist'>
                 Inicio
               </Link>
-              <Link to={`/tierlist`} className='enlace_tierlist'>
+              <Link to={`/tierlist`} className='enlace_tierlist' id='tierlistoc'>
                 Armá tu propia Tierlist!
               </Link>
               {isAuthenticated ? (

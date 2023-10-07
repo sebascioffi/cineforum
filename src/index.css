@@ -695,3 +695,9 @@ div.ui-helper-hidden-accessible{
     }
   
   }
+
+@media screen and (max-width:910px){
+  #tierlistoc{
+    display: none;
+  }
+  }
