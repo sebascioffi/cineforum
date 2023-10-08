@@ -188,7 +188,7 @@ const Tierlist  = () => {
       </div>
 
       <div id="directores-predefinidos">
-        <button class="director-button" data-director-id="123">Director 1</button>
+        <button class="director-button" data-director-id="138">Director 1</button>
         <button class="director-button" data-director-id="456">Director 2</button>
       </div>
 
