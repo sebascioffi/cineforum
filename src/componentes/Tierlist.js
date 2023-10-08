@@ -8,6 +8,74 @@ import { Link } from 'react-router-dom';
 
 const Tierlist  = () => {
   useEffect(() => {
+
+    $('#directores-predefinidos').on('click', '.director-button', function() {
+      var directorId = $(this).data('director-id');
+      buscarDirector(directorId); // Llama a una función para buscar el director por su ID
+    });
+
+    function buscarDirector(directorId) {
+      $.ajax({
+        url: 'https://api.themoviedb.org/3/person/' + directorId + '/movie_credits',
+        dataType: 'json',
+        data: {
+          api_key: 'b8eab5c8f5604ac06e5dc051de99718e',
+        },
+        success: function(data) {
+          $.ajax({
+            url: 'https://api.themoviedb.org/3/person/' + directorId + '/movie_credits',
+            dataType: 'json',
+            data: {
+              api_key: 'b8eab5c8f5604ac06e5dc051de99718e',
+            },
+            success: function(data) {
+              $('#portadas').empty();
+              $(function() {
+        // Agrega el código para que las imágenes de las películas sean arrastrables:
+        $('.draggable').draggable({
+          revert: true, // La imagen volverá a su posición original si no es soltada en una categoría
+          zIndex: 100,
+          start: function(event, ui) {
+            ui.helper.addClass('dragging'); // Agrega la clase "dragging" para indicar que la imagen está siendo arrastrada
+          },
+          stop: function(event, ui) {
+            ui.helper.removeClass('dragging'); // Remueve la clase "dragging" cuando la imagen deja de ser arrastrada
+          }
+        });
+        
+        // Agrega el código para que las divs de cada categoría de la tierlist sean droppables:
+        $('.droppable').droppable({
+          accept: '.draggable', // Sólo acepta elementos con la clase "draggable"
+          hoverClass: 'hovered',
+          drop: function(event, ui) {
+                  // Obtener la altura de la tier en la que se ha soltado la película
+                  var tierHeight = $(this).height();
+            
+            // Establecer la altura de la imagen de la película
+            $(ui.draggable).height(tierHeight);
+            $(ui.draggable).width("85px");
+            var $this = $(this);
+            var $movie = ui.draggable;
+            $movie.detach().appendTo($this); // Mueve la imagen de la película a la categoría correspondiente
+          }
+        });
+      });
+              $.each(data.crew, function(index, movie) {
+                if (movie.department === 'Directing' && movie.poster_path) {
+                  var img = $('<img />').attr({
+                    'src': 'https://image.tmdb.org/t/p/w185' + movie.poster_path,
+                    'alt': movie.title,
+                    'class': 'draggable' // Agrega la clase "draggable"
+                  });
+                  $('#portadas').append(img);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
     $('#director-input').autocomplete({
         source: function(request, response) {
             $.ajax({
@@ -117,6 +185,11 @@ const Tierlist  = () => {
       </div>
       <div id="divinput_tier">
         <input type="text" id="director-input" placeholder="Selecciona un director de la lista..."></input>
+      </div>
+
+      <div id="directores-predefinidos">
+        <button class="director-button" data-director-id="123">Director 1</button>
+        <button class="director-button" data-director-id="456">Director 2</button>
       </div>
 
       <div className="tierlist">
