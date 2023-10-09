@@ -39,7 +39,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+        <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} valorEmail={valorEmail} />
         <Routes>
           <Route exact path="/" element={<Main setFromFavoritas={setFromFavoritas} />} />
           <Route path="/pelicula/:id" element={<Detalles isAuthenticated={isAuthenticated} valorEmail={valorEmail} fromFavoritas={fromFavoritas} />} />
