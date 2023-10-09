@@ -188,8 +188,11 @@ const Tierlist  = () => {
       </div>
 
       <div id="directores-predefinidos">
-        <button class="director-button" data-director-id="138">Director 1</button>
-        <button class="director-button" data-director-id="456">Director 2</button>
+        <button class="director-button" data-director-id="138">Quentin Tarantino</button>
+        <button class="director-button" data-director-id="5255">Christopher Nolan</button>
+        <button class="director-button" data-director-id="1032">Martin Scorsese</button>
+        <button class="director-button" data-director-id="56960">Juan José Campanella</button>
+        <button class="director-button" data-director-id="116">James Cameron</button>
       </div>
 
       <div className="tierlist">

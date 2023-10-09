@@ -701,3 +701,26 @@ div.ui-helper-hidden-accessible{
     display: none;
   }
   }
+
+  #directores-predefinidos {
+    text-align: center;
+    margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+  }
+  
+  .director-button {
+    background-color: #CCA508;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .director-button:hover {
+    background-color: black;
+    color: #CCA508;
+  }
+  
