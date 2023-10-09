@@ -15,7 +15,6 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
   const { id } = useParams(); // Importa "useParams" de react-router-dom  
 
   useEffect(() => {
-    console.log("id: "+ Number(id));
     if (isAuthenticated) {
       obtenerPeliculasFavoritas()
         .then((peliculasFavoritas) => {
@@ -201,7 +200,7 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
               <p><strong>Fecha de estreno:</strong> {pelicula.release_date}</p>
             )}
             {director && (
-              <p><strong>Director/a:</strong> {director} </p>
+              <p><strong>Director/a {director.id}:</strong> {director} </p>
             )}
             {creditos && creditos.cast && creditos.cast.length > 0 && (
               <p><strong>Elenco:</strong> {creditos.cast.slice(0, 5).map(a => `${a.name} (${a.character})`).join(", ")} </p>
