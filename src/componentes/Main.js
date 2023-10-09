@@ -205,6 +205,7 @@ function Main({setFromFavoritas}) {
                             <option value="Steven Spielberg" data-director="Steven Spielberg">Steven Spielberg</option>
                             <option value="David Fincher" data-director="David Fincher">David Fincher</option>
                             <option value="Martin Scorsese" data-director="Martin Scorsese">Martin Scorsese</option>
+                            <option value="Juan Jose Campanella" data-director="Juan Jose Campanella">Juan Jose Campanela</option>
                             <option value="Ridley Scott" data-director="Ridley Scott">Ridley Scott</option>
                             <option value="Alfred Hitchcock" data-director="Alfred Hitchcock">Alfred Hitchcock</option>
                             <option value="Stanley Kubrick" data-director="Stanley Kubrick">Stanley Kubrick</option>
