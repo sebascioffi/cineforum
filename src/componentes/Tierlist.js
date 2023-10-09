@@ -11,6 +11,7 @@ const Tierlist  = () => {
 
     $('#directores-predefinidos').on('click', '.director-button', function() {
       var directorId = $(this).data('director-id');
+      handleReset();
       buscarDirector(directorId); // Llama a una función para buscar el director por su ID
     });
 
