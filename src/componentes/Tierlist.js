@@ -103,7 +103,6 @@ const Tierlist  = () => {
           select: function(event, ui) {
             $('#director-input').val(ui.item.label); // Actualizamos el valor del input con el nombre del director seleccionado
             var directorId = ui.item.id;
-            handleReset();
             $.ajax({
               url: 'https://api.themoviedb.org/3/person/' + directorId + '/movie_credits',
               dataType: 'json',
@@ -149,6 +148,7 @@ const Tierlist  = () => {
                       'alt': movie.title,
                       'class': 'draggable' // Agrega la clase "draggable"
                     });
+                    handleReset();
                     $('#portadas').append(img);
                   }
                 });
