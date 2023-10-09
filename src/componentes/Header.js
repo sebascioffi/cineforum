@@ -10,8 +10,16 @@ const Header  = ({ isAuthenticated, handleLogout, valorEmail }) => {
         <nav className="navbar navbar-expand-lg" id="nav">
           <div className="container-md">
             <a className="navbar-brand" href="/"><img src={logo} alt="Logo" width="110" height="110"></img></a>
+
             <div className="ml-auto">
-              <p>Sesión iniciada en {valorEmail} </p>
+              {isAuthenticated ? (
+                <>
+                <p>Sesión iniciada en {valorEmail} </p>
+                </>
+              ) : (
+                <>
+                </>
+              )}
               <Link to={`/`} className='enlace_tierlist'>
                 Inicio
               </Link>
