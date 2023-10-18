@@ -12,7 +12,7 @@ const SignupForm = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [emailError, setEmailError] = useState('');
-
+  const [estaCargando, setEstaCargando] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,6 +48,7 @@ const SignupForm = () => {
     event.preventDefault();
     const isValid = validateForm();
     if (isValid) {
+      setEstaCargando(true);
       try {
         const response = await fetch('https://cineforum-backend.onrender.com/api/crearUsuario', {
           method: 'POST',
@@ -59,11 +60,14 @@ const SignupForm = () => {
   
         if (response.status === 200) {
           setIsSubmitted(true);
+          setEstaCargando(false);
         } else if (response.status === 400) {
           console.log("email ya creado");
           setEmailError('Este email ya se encuentra registrado');
+          setEstaCargando(false);
         }else{
           console.log("error en la rta");
+          setEstaCargando(false);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -124,6 +128,11 @@ const SignupForm = () => {
             />
             {errors.password && <p className="error">{errors.password}</p>}
           </div>
+          {estaCargando ? (
+            <p>cargando...</p>
+          ):(
+            <></>
+          )}
           <button id='crear_cuenta' type="submit">Crear Cuenta</button>
         </form>
       )}
