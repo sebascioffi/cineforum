@@ -585,6 +585,8 @@ div.ui-helper-hidden-accessible{
   text-align: center;
   max-width: 400px;
   margin: 0 auto;
+  margin-bottom: 100px;
+  margin-top: 40px;
 }
 
 .signup-form h2 {
