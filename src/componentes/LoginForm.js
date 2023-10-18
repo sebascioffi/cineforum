@@ -12,6 +12,7 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [usuarioValido, setUsuarioValido] = useState('');
+  const [estaCargando, setEstaCargando] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,6 +40,8 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
     event.preventDefault();
     const isValid = validateForm();
     if (isValid) {
+
+      setEstaCargando(true);
       try {
         const response = await fetch('https://cineforum-backend.onrender.com/api/iniciarSesion', {
           method: 'POST',
@@ -57,11 +60,12 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
           const email = inputEmail.value;
           setValorEmail(email); 
           localStorage.setItem('userEmail', email);
-
+          setEstaCargando(false);
         }else{
           setIsSubmitted(false);
           setUsuarioValido("Los datos ingresados son incorrectos");
           console.log("error al iniciar sesion");
+          setEstaCargando(false);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -100,6 +104,11 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
             {errors.password && <p className="error">{errors.password}</p>}
             {usuarioValido && <p className="error">{usuarioValido}</p>}
           </div>
+           {estaCargando ? (
+            <p>cargando...</p>
+           ):(
+            <></>
+           )}
           <button type="submit" id='crear_cuenta'>Iniciar Sesión</button>
         </form>
       )}
