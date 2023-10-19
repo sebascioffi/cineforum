@@ -14,7 +14,7 @@ const Header  = ({ isAuthenticated, handleLogout, valorEmail }) => {
             <div className="ml-auto">
               {isAuthenticated ? (
                 <>
-                <p>Sesión iniciada en {valorEmail} </p>
+                <p className="sesionIniciada">Sesión iniciada en {valorEmail} </p>
                 </>
               ) : (
                 <>
