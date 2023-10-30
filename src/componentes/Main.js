@@ -35,7 +35,6 @@ function Main({setFromFavoritas}) {
 
   const handleFavoritas = () => {
     setFromFavoritas(false);
-    // Resto de tu código
   };
 
   useEffect(() => {
@@ -89,60 +88,75 @@ function Main({setFromFavoritas}) {
 
   const obtenerPeliculas = (busqueda = "", page = 1) => {
     setCargando(true);
-    let url = "";
-
+    let url = "https://api.themoviedb.org/3/movie/popular"; // URL predeterminada para películas populares
+    const params = {
+      api_key: apiKey,
+      page: page,
+    };
+  
     if (busqueda === "") {
-      let endpoint = generoSeleccionado === "" ? "movie/popular" : "discover/movie";
-      const params = {
-        api_key: apiKey,
-        page: page,
-      };
-    
       if (generoSeleccionado !== "") {
         params.with_genres = generoSeleccionado;
       }
-    
+  
       if (anioSeleccionado !== "") {
         params.primary_release_year = anioSeleccionado;
       }
-
-      if (directorSeleccionado !== ""){
+  
+      if (directorSeleccionado !== "") {
         const Id = directoresIds[directorSeleccionado];
         params.with_crew = Id;
       }
+  
       if (calificacionSeleccionada !== "") {
         const calificacionMinima = parseFloat(calificacionSeleccionada);
         const calificacionSuperior = calificacionMinima + 1.0;
         params['vote_average.gte'] = calificacionMinima;
         params['vote_average.lte'] = calificacionSuperior.toFixed(3);
       }
-    
+  
+      // Construye la URL con los parámetros seleccionados
       const queryString = new URLSearchParams(params).toString();
-      url = `https://api.themoviedb.org/3/${endpoint}?${queryString}`;
+      url = `https://api.themoviedb.org/3/discover/movie?${queryString}`;
     } else {
-      url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${busqueda}&page=${page}`;
+      // Si hay una búsqueda de texto, utiliza la búsqueda de películas
+      params.query = busqueda;
+      const queryString = new URLSearchParams(params).toString();
+      url = `https://api.themoviedb.org/3/search/movie?${queryString}`;
     }
-    
+  
     fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const peliculasNuevas = data.results;
-        setPeliculas(prevPeliculas => page === 1 ? peliculasNuevas : [...prevPeliculas, ...peliculasNuevas]);
-
-        if (data.total_pages > page) {          
-          setMostrarBoton(true);          
-          setPagina(page + 1);
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        var peliculasNuevas = data.results;
+  
+        // Actualizar el estado de las películas
+        if (page === 1) {
+          // Si es la primera página, reemplaza las películas anteriores
+          setPeliculas(peliculasNuevas);
         } else {
-          setMostrarBoton(false);
+          // Si no es la primera página, agrega las nuevas películas al estado existente
+          setPeliculas((prevPeliculas) => [...prevPeliculas, ...peliculasNuevas]);
         }
-
+  
+        // Verificar si hay más páginas de resultados
+        if (data.total_pages > page) {
+          setPagina(page + 1); // Incrementar la página
+        } else {
+          setMostrarBoton(false); // Ocultar el botón "Ver más" si no hay más resultados
+        }
+  
+        // Después de cargar las películas, establece cargando en false
         setCargando(false);
       })
-      .catch(error => {
+      .catch(function (error) {
         console.error("Error al obtener películas: " + error);
-        setCargando(false);
+        setCargando(false); // En caso de error, establece cargando en false
       });
   };
+  
 
   const handleInputChange = event => {
     const valor = event.target.value;
