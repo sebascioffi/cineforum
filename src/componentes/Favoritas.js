@@ -99,7 +99,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
             peliculasFavoritas.map((pelicula) => (
               <Link to={`/pelicula/${pelicula.id}`} key={pelicula.id} onClick={handleFavoritas}>
                 <Pelicula pelicula={pelicula} />
-                <h2>Remover</h2>
+                <h2 id='removerPelicula'>Quitar de Favoritas</h2>
               </Link>
             ))
           )}
