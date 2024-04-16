@@ -2,11 +2,30 @@ import $ from 'jquery';
 import 'jquery-ui';
 import 'jquery-ui/ui/widgets/draggable'; // Asegúrate de que estás importando el módulo "draggable" de jQuery UI
 import 'jquery-ui/ui/widgets/droppable'; // También importa el módulo "droppable" de jQuery UI si lo usas
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'jquery-ui/ui/widgets/autocomplete';
 import { Link } from 'react-router-dom';
 
 const Tierlist  = () => {
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // Función para actualizar el tamaño de la pantalla cuando se redimensiona la ventana
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    // Agregar un event listener para detectar cambios en el tamaño de la ventana
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el event listener cuando el componente se desmonta
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
   useEffect(() => {
 
     $('#directores-predefinidos').on('click', '.director-button', function() {
@@ -181,7 +200,8 @@ const Tierlist  = () => {
   };
       
     return (
-    <main>
+      <>
+      {screenWidth >= 910 ? <main className='maintierlist'>
       <div>
         <Link to="/" className="btn">Volver a inicio</Link>
       </div>
@@ -289,7 +309,8 @@ const Tierlist  = () => {
       </div>
 
 
-    </main>
+    </main> : <h2 className='opciontamaño'>Esta opción está disponible en pantallas más grandes!</h2>}
+    </>
     );
   };
   

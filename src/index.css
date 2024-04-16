@@ -730,3 +730,11 @@ div.ui-helper-hidden-accessible{
   .sesionIniciada{
     color: rgba(255, 255, 255, 0.336);
   }
+
+  .opciontamaño{
+    background-color: #d4bb58;
+    padding-bottom: 200px;
+    text-align: center;
+    margin: auto;
+    padding-top: 200px;
+  }
