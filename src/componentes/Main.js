@@ -263,7 +263,7 @@ function Main({setFromFavoritas}) {
                     <h2>Busqueda por título:</h2>
                 </div> 
                 <form id="divinput">
-                    <input id="input1" type="text" placeholder="Busca tu película favorita..." onChange={handleInputChange} value={busqueda}></input>
+                    <input id="input1" type="text" placeholder="Buscar..." onChange={handleInputChange} value={busqueda}></input>
                 </form>
             </div>
             </div>
