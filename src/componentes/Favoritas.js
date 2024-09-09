@@ -92,7 +92,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
           <p className='noPeliculas'>Cargando...</p>
         </div>
       ) : (
-        <div id='peliculas'>
+        <div className='peliculasfavoritasc' id='peliculas'>
           {peliculasFavoritas.length === 0 ? (
             <p className='noPeliculas'>No has agregado películas favoritas!</p>
           ) : (
