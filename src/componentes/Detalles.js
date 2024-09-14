@@ -11,6 +11,7 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const apiKey = "b8eab5c8f5604ac06e5dc051de99718e";
+  const port = process.env.REACT_APP_ORIGIN;
 
   const { id } = useParams(); // Importa "useParams" de react-router-dom  
 
@@ -69,7 +70,7 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
   const handleFavoriteClick = async () => {
     if (isAuthenticated){
       try {
-      const response = await fetch('https://cineforum-backend.onrender.com/api/agregarFavorita', {
+      const response = await fetch(`${port}/api/agregarFavorita`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
 
   function obtenerPeliculasFavoritas() {
     // Define la URL de tu endpoint en el backend para obtener las películas favoritas
-    const apiUrl = `https://cineforum-backend.onrender.com/api/obtenerFavoritas?userEmail=${(localStorage.getItem("userEmail"))}`;
+    const apiUrl = `${port}/api/obtenerFavoritas?userEmail=${(localStorage.getItem("userEmail"))}`;
   
     // Define los datos de la solicitud
     const requestData = {
@@ -124,7 +125,7 @@ const Detalles = ({ isAuthenticated, valorEmail, fromFavoritas  }) => {
 
   const handleRemoveFavoriteClick = async () => {
     try {
-      const response = await fetch('https://cineforum-backend.onrender.com/api/quitarFavorita', {
+      const response = await fetch(`${port}/api/quitarFavorita`, {
         method: 'DELETE', // Utilizamos el método DELETE para eliminar la película
         headers: {
           'Content-Type': 'application/json',

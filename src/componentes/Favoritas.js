@@ -7,6 +7,8 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
   const [peliculasFavoritas, setPeliculasFavoritas] = useState([]);
   const [cargando, setCargando] = useState(false);
 
+  const port = process.env.REACT_APP_ORIGIN;
+  
   function Pelicula({ pelicula }) {
     return (
       <div className="pelicula">
@@ -28,7 +30,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
   function obtenerPeliculasFavoritas() {
     setCargando(true);
     // Define la URL de tu endpoint en el backend para obtener las películas favoritas
-    const apiUrl = `https://cineforum-backend.onrender.com/api/obtenerFavoritas?userEmail=${encodeURIComponent(valorEmail)}`;
+    const apiUrl = `${port}/api/obtenerFavoritas?userEmail=${encodeURIComponent(valorEmail)}`;
   
     // Define los datos de la solicitud
     const requestData = {

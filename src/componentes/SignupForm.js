@@ -14,6 +14,8 @@ const SignupForm = () => {
   const [emailError, setEmailError] = useState('');
   const [estaCargando, setEstaCargando] = useState(false);
 
+  const port = process.env.REACT_APP_ORIGIN;
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -50,7 +52,7 @@ const SignupForm = () => {
     if (isValid) {
       setEstaCargando(true);
       try {
-        const response = await fetch('https://cineforum-backend.onrender.com/api/crearUsuario', {
+        const response = await fetch(`${port}/api/crearUsuario`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

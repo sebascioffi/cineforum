@@ -14,6 +14,8 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
   const [usuarioValido, setUsuarioValido] = useState('');
   const [estaCargando, setEstaCargando] = useState(false);
 
+  const port = process.env.REACT_APP_ORIGIN;
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -43,7 +45,7 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
 
       setEstaCargando(true);
       try {
-        const response = await fetch('https://cineforum-backend.onrender.com/api/iniciarSesion', {
+        const response = await fetch(`${port}/api/iniciarSesion`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
