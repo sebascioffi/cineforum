@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ImagenPorDefecto from "../imagenes/sinImagen.png";
 import { Link, useNavigate } from 'react-router-dom';
 
-const Favoritas = ({ valorEmail, setFromFavoritas }) => {
+const Favoritas = ({ valorEmail, setFromFavoritas, isAuthenticated }) => {
   const apiKey = "b8eab5c8f5604ac06e5dc051de99718e";
   const [peliculasFavoritas, setPeliculasFavoritas] = useState([]);
   const [cargando, setCargando] = useState(false);

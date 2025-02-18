@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './../index.css';
 import { useNavigate } from 'react-router-dom';
 
-const SignupForm = () => {
+const SignupForm = ({ isAuthenticated }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
