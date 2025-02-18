@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './componentes/Header';
 import Main from './componentes/Main';
 import Detalles from './componentes/Detalles';
@@ -47,6 +47,8 @@ function App() {
           <Route path="/crearcuenta" element={<SignupForm isAuthenticated={isAuthenticated} />} />
           <Route path="/sesion" element={<LoginForm isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} valorEmail={valorEmail} setValorEmail={setValorEmail} />} />
           <Route path='/favoritas' element={<Favoritas valorEmail={valorEmail} setFromFavoritas={setFromFavoritas} isAuthenticated={isAuthenticated} />} />
+          {/* Ruta para manejar rutas no existentes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </div>
