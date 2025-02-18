@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import ImagenPorDefecto from "../imagenes/sinImagen.png";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Favoritas = ({ valorEmail, setFromFavoritas }) => {
   const apiKey = "b8eab5c8f5604ac06e5dc051de99718e";
   const [peliculasFavoritas, setPeliculasFavoritas] = useState([]);
   const [cargando, setCargando] = useState(false);
+  const navigate = useNavigate();
 
   const port = process.env.REACT_APP_ORIGIN;
-  
+
+  useEffect(() => {
+    // Comprobamos si el usuario ya está autenticado al cargar la página
+    if (!isAuthenticated) {
+      navigate('/'); // Si no está autenticado, lo redirigimos a la página principal
+    }
+  }, [navigate]);
+
   function Pelicula({ pelicula }) {
     return (
       <div className="pelicula">
@@ -31,7 +39,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
     setCargando(true);
     // Define la URL de tu endpoint en el backend para obtener las películas favoritas
     const apiUrl = `${port}/api/obtenerFavoritas?userEmail=${encodeURIComponent(valorEmail)}`;
-  
+
     // Define los datos de la solicitud
     const requestData = {
       method: 'GET',
@@ -39,7 +47,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
         'Content-Type': 'application/json',
       },
     };
-  
+
     // Realiza la solicitud al servidor
     return fetch(apiUrl, requestData)
       .then((response) => {
@@ -108,7 +116,7 @@ const Favoritas = ({ valorEmail, setFromFavoritas }) => {
       )}
     </main>
   );
-  
+
 };
 
 export default Favoritas;

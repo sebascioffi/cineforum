@@ -35,7 +35,7 @@ function App() {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');
   };
-  
+
   return (
     <Router>
       <div>
@@ -44,9 +44,9 @@ function App() {
           <Route exact path="/" element={<Main setFromFavoritas={setFromFavoritas} />} />
           <Route path="/pelicula/:id" element={<Detalles isAuthenticated={isAuthenticated} valorEmail={valorEmail} fromFavoritas={fromFavoritas} />} />
           <Route path="/tierlist" element={<Tierlist />} />
-          <Route path="/crearcuenta" element={<SignupForm />} />
+          <Route path="/crearcuenta" element={<SignupForm isAuthenticated={isAuthenticated} />} />
           <Route path="/sesion" element={<LoginForm isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} valorEmail={valorEmail} setValorEmail={setValorEmail} />} />
-          <Route path='/favoritas' element={<Favoritas valorEmail={valorEmail} setFromFavoritas={setFromFavoritas} />} />
+          <Route path='/favoritas' element={<Favoritas valorEmail={valorEmail} setFromFavoritas={setFromFavoritas} isAuthenticated={isAuthenticated} />} />
         </Routes>
         <Footer />
       </div>

@@ -16,6 +16,13 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
 
   const port = process.env.REACT_APP_ORIGIN;
 
+  useEffect(() => {
+    // Comprobamos si el usuario ya está autenticado al cargar la página
+    if (isAuthenticated) {
+      navigate('/'); // Si está autenticado, lo redirigimos a la página principal
+    }
+  }, [navigate]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -60,10 +67,10 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
           navigate('/');
           const inputEmail = document.getElementById('email');
           const email = inputEmail.value;
-          setValorEmail(email); 
+          setValorEmail(email);
           localStorage.setItem('userEmail', email);
           setEstaCargando(false);
-        }else{
+        } else {
           setIsSubmitted(false);
           setUsuarioValido("Los datos ingresados son incorrectos");
           console.log("error al iniciar sesion");
@@ -77,44 +84,44 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated, valorEmail, setValorEm
 
   return (
     <section id='sec_crearcuenta'>
-    <div className="login-form">
-      <h2>Iniciar Sesión</h2>
-      {isSubmitted ? (
-        <p>Sesión iniciada con éxito.</p>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-            {errors.email && <p className="error">{errors.email}</p>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
-            {usuarioValido && <p className="error">{usuarioValido}</p>}
-          </div>
-           {estaCargando ? (
-            <p>cargando...</p>
-           ):(
-            <></>
-           )}
-          <button type="submit" id='crear_cuenta'>Iniciar Sesión</button>
-        </form>
-      )}
-    </div>
+      <div className="login-form">
+        <h2>Iniciar Sesión</h2>
+        {isSubmitted ? (
+          <p>Sesión iniciada con éxito.</p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Contraseña:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              {errors.password && <p className="error">{errors.password}</p>}
+              {usuarioValido && <p className="error">{usuarioValido}</p>}
+            </div>
+            {estaCargando ? (
+              <p>cargando...</p>
+            ) : (
+              <></>
+            )}
+            <button type="submit" id='crear_cuenta'>Iniciar Sesión</button>
+          </form>
+        )}
+      </div>
     </section>
   );
 };

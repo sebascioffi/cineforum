@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './../index.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +14,16 @@ const SignupForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [estaCargando, setEstaCargando] = useState(false);
+  const navigate = useNavigate();
 
   const port = process.env.REACT_APP_ORIGIN;
+
+  useEffect(() => {
+    // Comprobamos si el usuario ya está autenticado al cargar la página
+    if (isAuthenticated) {
+      navigate('/'); // Si está autenticado, lo redirigimos a la página principal
+    }
+  }, [navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -59,7 +68,7 @@ const SignupForm = () => {
           },
           body: JSON.stringify(formData),
         });
-  
+
         if (response.status === 200) {
           setIsSubmitted(true);
           setEstaCargando(false);
@@ -67,7 +76,7 @@ const SignupForm = () => {
           console.log("email ya creado");
           setEmailError('Este email ya se encuentra registrado');
           setEstaCargando(false);
-        }else{
+        } else {
           console.log("error en la rta");
           setEstaCargando(false);
         }
@@ -76,69 +85,69 @@ const SignupForm = () => {
       }
     }
   };
-  
+
   return (
     <section id='sec_crearcuenta'>
-    <div className="signup-form">
-      <h2>Crear Cuenta</h2>
-      {isSubmitted ? (
-        <p>¡Cuenta creada con exito!</p>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="firstName">Nombre:</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-            />
-            {errors.firstName && <p className="error">{errors.firstName}</p>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="lastName">Apellido:</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-            />
-            {errors.lastName && <p className="error">{errors.lastName}</p>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-            {errors.email && <p className="error">{errors.email}</p>}
-            {emailError && <p className="error">{emailError}</p>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
-          </div>
-          {estaCargando ? (
-            <p>cargando...</p>
-          ):(
-            <></>
-          )}
-          <button id='crear_cuenta' type="submit">Crear Cuenta</button>
-        </form>
-      )}
-    </div>
+      <div className="signup-form">
+        <h2>Crear Cuenta</h2>
+        {isSubmitted ? (
+          <p>¡Cuenta creada con exito!</p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="firstName">Nombre:</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+              />
+              {errors.firstName && <p className="error">{errors.firstName}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="lastName">Apellido:</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+              />
+              {errors.lastName && <p className="error">{errors.lastName}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
+              {emailError && <p className="error">{emailError}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Contraseña:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              {errors.password && <p className="error">{errors.password}</p>}
+            </div>
+            {estaCargando ? (
+              <p>cargando...</p>
+            ) : (
+              <></>
+            )}
+            <button id='crear_cuenta' type="submit">Crear Cuenta</button>
+          </form>
+        )}
+      </div>
     </section>
   );
 };
